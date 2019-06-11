@@ -12,6 +12,13 @@ pipeline {
           yamlFile 'nodejs-pod.yaml'
         }
       }
+      steps {
+        checkout scm
+        container('nodejs') {
+          echo 'Hello World!'   
+          sh 'node --version'
+        }
+      }      
     }
     stage('Build and Push Image') {
       when {

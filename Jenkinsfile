@@ -4,14 +4,14 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '2'))
     skipDefaultCheckout true
   }
-    triggers {
+  triggers {
     eventTrigger simpleMatch('hello-api-eli')
   }
   stages {
     stage('Test') {
       agent {
         kubernetes {
-          label 'nodejs-app-pod2'
+          label 'nodejs-app-pod-2'
           yamlFile 'nodejs-pod.yaml'
         }
       }
@@ -21,15 +21,15 @@ pipeline {
           echo 'Hello World!'   
           sh 'node --version'
         }
-      }      
+      }
     }
     stage('Build and Push Image') {
       when {
-         beforeAgent true
-         branch 'master'
+        beforeAgent true
+        branch 'master'
       }
       steps {
-         echo "TODO - build and push image"
+        echo "TODO - build and push image"
       }
     }
   }
